@@ -29,7 +29,6 @@ const FlightResults = ({
 }: FlightResultsProps) => {
   const [selectedFlight, setSelectedFlight] = useState<Flight | null>(null);
 
-  // Loading state
   if (loading) {
     return (
       <div className="space-y-4">
@@ -46,7 +45,6 @@ const FlightResults = ({
     );
   }
 
-  // Error state
   if (error) {
     return (
       <div className="bg-white rounded-xl shadow-sm border border-red-200 p-8 text-center">
@@ -76,7 +74,6 @@ const FlightResults = ({
           )}
         </div>
 
-        {/* Tips for common errors */}
         <div className="mt-6 p-4 bg-gray-50 rounded-lg text-left max-w-md mx-auto">
           <h4 className="text-sm font-medium text-gray-900 mb-2">💡 Tips:</h4>
           <ul className="text-xs text-gray-600 space-y-1">
@@ -90,7 +87,6 @@ const FlightResults = ({
     );
   }
 
-  // No results yet
   if (!results) {
     return (
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
@@ -124,7 +120,6 @@ const FlightResults = ({
     );
   }
 
-  // No flights found
   if (results.flights.length === 0) {
     return (
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
@@ -163,10 +158,8 @@ const FlightResults = ({
     );
   }
 
-  // Success state with results
   return (
     <div className="space-y-6">
-      {/* Results header */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between">
           <div>
@@ -192,7 +185,6 @@ const FlightResults = ({
         </div>
       </div>
 
-      {/* Flight cards */}
       <div className="space-y-4">
         {results.flights.map((flight) => (
           <FlightCard
@@ -203,7 +195,6 @@ const FlightResults = ({
         ))}
       </div>
 
-      {/* Load more button if there are more results */}
       {results.totalResults > results.flights.length && (
         <div className="text-center py-6">
           <Button variant="secondary" disabled>

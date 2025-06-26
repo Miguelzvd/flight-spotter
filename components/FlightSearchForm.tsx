@@ -99,7 +99,6 @@ const FlightSearchForm = ({
   };
 
   const handleSearch = async () => {
-    // Reset error state
     onError(null);
 
     if (!validateForm()) {
@@ -132,7 +131,6 @@ const FlightSearchForm = ({
         countryCode: "US",
       };
 
-      // Adicionar propriedades opcionais apenas se tiverem valor
       if (tripType === "round-trip" && returnDate) {
         searchParams.returnDate = returnDate.toISOString().split("T")[0];
       }
@@ -160,7 +158,6 @@ const FlightSearchForm = ({
     } catch (error) {
       console.error("❌ Flight search failed:", error);
 
-      // Handle different types of errors with more specific messages
       if (error instanceof Error) {
         if (error.message.includes("Could not find")) {
           onError(
@@ -199,7 +196,6 @@ const FlightSearchForm = ({
             "Service temporarily unavailable. Please try again in a few minutes."
           );
         } else if (error.message.includes("API Error:")) {
-          // Extract the actual API error message
           const apiError = error.message.replace("API Error: ", "");
           onError(
             `Search failed: ${apiError}. Please try different search criteria.`
@@ -295,8 +291,8 @@ const FlightSearchForm = ({
             </label>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-            <div className="relative">
+          <div className="flex flex-col md:flex-row items-center gap-4 justify-center">
+            <div className="w-full">
               <AirportSearch
                 label="From"
                 value={origin}
@@ -307,7 +303,16 @@ const FlightSearchForm = ({
               />
             </div>
 
-            <div className="relative">
+            <button
+              type="button"
+              onClick={swapAirports}
+              className="bg-white border-2 md:mt-5 border-gray-200 rounded-full p-2 hover:border-primary-500 hover:text-primary-600 hover:shadow-md transition-all duration-200 shadow-sm"
+              title="Swap airports"
+            >
+              <ArrowsRightLeftIcon className="h-4 w-4" />
+            </button>
+
+            <div className="w-full">
               <AirportSearch
                 label="To"
                 value={destination}
@@ -315,38 +320,32 @@ const FlightSearchForm = ({
                 placeholder="Destination airport"
                 error={errors.destination}
               />
-
-              <button
-                type="button"
-                onClick={swapAirports}
-                className="absolute -top-2 -left-4 lg:left-1/2 lg:-translate-x-1/2 lg:top-8 z-20 bg-white border-2 border-gray-200 rounded-full p-2 hover:border-primary-500 hover:text-primary-600 hover:shadow-md transition-all duration-200 shadow-sm"
-                title="Swap airports"
-              >
-                <ArrowsRightLeftIcon className="h-4 w-4" />
-              </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-            <DatePicker
-              label="Departure Date"
-              value={departureDate}
-              onChange={setDepartureDate}
-              minDate={new Date()}
-              error={errors.departureDate}
-              placeholder="Select departure date"
-            />
-
-            {tripType === "round-trip" && (
+          <div className="flex flex-col md:flex-row items-center gap-4 justify-center">
+            <div className="w-full  ">
               <DatePicker
-                label="Return Date"
-                value={returnDate}
-                onChange={setReturnDate}
-                minDate={departureDate || new Date()}
-                error={errors.returnDate}
-                placeholder="Select return date"
+                label="Departure Date"
+                value={departureDate}
+                onChange={setDepartureDate}
+                minDate={new Date()}
+                error={errors.departureDate}
+                placeholder="Select departure date"
               />
-            )}
+            </div>
+            <div className="w-full">
+              {tripType === "round-trip" && (
+                <DatePicker
+                  label="Return Date"
+                  value={returnDate}
+                  onChange={setReturnDate}
+                  minDate={departureDate || new Date()}
+                  error={errors.returnDate}
+                  placeholder="Select return date"
+                />
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

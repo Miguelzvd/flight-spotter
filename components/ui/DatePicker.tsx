@@ -77,7 +77,7 @@ const DatePicker = ({
   };
 
   return (
-    <div className="relative w-full">
+    <div className="w-full">
       {/* Label */}
       <label className="block text-sm font-medium text-gray-700 mb-2">
         {label}
